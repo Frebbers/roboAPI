@@ -17,36 +17,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class RoboApiApplication {
 
-	@Autowired
-	private GameRepository gameRepository;
-	@Autowired
-	private PlayerRepository playerRepository;
-	@Autowired
-	private MoveRepository moveRepository;
-
-	@Autowired
-	private GameController gameController;
-	@Autowired
-	private PlayerController playerController;
-	@Autowired
-	private MoveController moveController;
-
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(RoboApiApplication.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner demo(){
-		return (args) -> {
-			// Create a new game instance
-			Game newGame = new Game();
-			gameController.createGame(newGame);
-
-			// Create a new player
-			Player newPlayer = new Player();
-			playerController.createPlayer(newPlayer);
-		};
-	}
 }
