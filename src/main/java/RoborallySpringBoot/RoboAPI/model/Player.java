@@ -18,9 +18,6 @@ public class Player {
     private Long id;
     private String name;
     private String state;
-
-    @ManyToOne
-    @JoinColumn(name = "game_id")
-    private Game game;
+    private Long gameId;
 }
 

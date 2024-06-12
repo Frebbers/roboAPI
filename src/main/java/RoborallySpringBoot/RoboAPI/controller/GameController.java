@@ -5,7 +5,9 @@ import RoborallySpringBoot.RoboAPI.model.Player;
 import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,16 +38,17 @@ public class GameController {
         return gameRepository.save(game);
     }
 
-    @PutMapping("/{id}")
-    public Game updateGame(@PathVariable Long id, @RequestBody Game gameDetails) {
-        Game game = gameRepository.findById(id).orElse(null);
-        if (game != null) {
-            game.setBoardId(gameDetails.getBoardId());
-            game.setMaxPlayers(gameDetails.getMaxPlayers());
-
-            return gameRepository.save(game);
+    @PutMapping("/{gameId}")
+    public Game updateGame(@PathVariable Long gameId, @RequestBody Game game) {
+        Optional<Game> gameOptional = gameRepository.findById(gameId);
+        if (gameOptional.isPresent()) {
+            Game existingGame = gameOptional.get();
+            existingGame.setPlayerIds(game.getPlayerIds());
+            existingGame.setMaxPlayers(game.getMaxPlayers());
+            return gameRepository.save(existingGame);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
         }
-        return null;
     }
 
     @DeleteMapping("/{id}")
@@ -59,13 +62,13 @@ public class GameController {
         if (game != null) {
             List<Player> players = playerRepository.findAll();
             return players.stream()
-                    .filter(player -> player.getGame().getId().equals(id))
+                    .filter(player -> player.getGameId() != null && player.getGameId().equals(id))
                     .collect(Collectors.toList());
         }
         return null;
     }
 
-    @PostMapping("/{gameId}/join")
+    @PutMapping("/{gameId}/join")
     public Game joinGame(@PathVariable Long gameId, @RequestBody Long playerId) {
         Optional<Game> gameOptional = gameRepository.findById(gameId);
         Optional<Player> playerOptional = playerRepository.findById(playerId);
@@ -76,13 +79,14 @@ public class GameController {
 
             if (game.getPlayerIds().size() < game.getMaxPlayers()) {
                 game.getPlayerIds().add(playerId);
-                player.setGame(game);
+                player.setGameId(game.getId());
                 playerRepository.save(player);
                 return gameRepository.save(game);
             } else {
                 throw new IllegalStateException("The game lobby is full.");
             }
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game or Player not found");
         }
-        return null;
     }
 }

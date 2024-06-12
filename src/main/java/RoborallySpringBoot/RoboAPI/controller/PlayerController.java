@@ -36,10 +36,12 @@ public class PlayerController {
     }
 
     @PutMapping("/{id}")
-    public Player updateReadyState(@PathVariable Long id, @RequestBody String state) {
+    public Player updatePlayer(@PathVariable Long id, @RequestBody Player updatedPlayer) {
         Player player = playerRepository.findById(id).orElse(null);
         if (player != null) {
-            player.setState(state);
+            player.setName(updatedPlayer.getName());
+            player.setState(updatedPlayer.getState());
+            player.setGameId(updatedPlayer.getGameId());
             return playerRepository.save(player);
         }
         return null;

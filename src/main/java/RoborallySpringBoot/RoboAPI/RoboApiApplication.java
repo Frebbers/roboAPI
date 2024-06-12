@@ -3,8 +3,6 @@ package RoborallySpringBoot.RoboAPI;
 import RoborallySpringBoot.RoboAPI.controller.GameController;
 import RoborallySpringBoot.RoboAPI.controller.MoveController;
 import RoborallySpringBoot.RoboAPI.controller.PlayerController;
-import RoborallySpringBoot.RoboAPI.model.Game;
-import RoborallySpringBoot.RoboAPI.model.Player;
 import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.MoveRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
@@ -38,10 +36,9 @@ public class RoboApiApplication {
 	@Bean
 	public CommandLineRunner demo(){
 		return (args) -> {
+			/*
 			// Create a new game instance
 			Game newGame = new Game();
-			newGame.setBoardId(1L);
-			newGame.setMaxPlayers(4);
 			gameController.createGame(newGame);
 
 			// Create a new player
@@ -56,6 +53,8 @@ public class RoboApiApplication {
 
 			// Set the ready state for the player
 			playerController.updateReadyState(newPlayer.getId(), "not_ready");
+
+			 */
 		};
 	}
 }
