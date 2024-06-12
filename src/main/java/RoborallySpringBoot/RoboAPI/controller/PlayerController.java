@@ -29,4 +29,19 @@ public class PlayerController {
     public Player createPlayer(@RequestBody Player player) {
         return playerRepository.save(player);
     }
+
+    @DeleteMapping("/{id}")
+    public void deletePlayer(@PathVariable Long id) {
+        playerRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Player updateReadyState(@PathVariable Long id, @RequestBody String state) {
+        Player player = playerRepository.findById(id).orElse(null);
+        if (player != null) {
+            player.setState(state);
+            return playerRepository.save(player);
+        }
+        return null;
+    }
 }

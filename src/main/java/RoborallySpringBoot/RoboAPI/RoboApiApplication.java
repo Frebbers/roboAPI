@@ -31,8 +31,6 @@ public class RoboApiApplication {
 	@Autowired
 	private MoveController moveController;
 
-
-
 	public static void main(String[] args) {
 		SpringApplication.run(RoboApiApplication.class, args);
 	}
@@ -42,11 +40,22 @@ public class RoboApiApplication {
 		return (args) -> {
 			// Create a new game instance
 			Game newGame = new Game();
+			newGame.setBoardId(1L);
+			newGame.setMaxPlayers(4);
 			gameController.createGame(newGame);
 
 			// Create a new player
 			Player newPlayer = new Player();
+			newPlayer.setName("Rekt");
 			playerController.createPlayer(newPlayer);
+
+			// Join the game with the new player
+			gameController.joinGame(newGame.getId(), newPlayer.getId());
+
+			System.out.println("Players in lobby: " + gameController.getPlayersInLobby(1L).size());
+
+			// Set the ready state for the player
+			playerController.updateReadyState(newPlayer.getId(), "not_ready");
 		};
 	}
 }

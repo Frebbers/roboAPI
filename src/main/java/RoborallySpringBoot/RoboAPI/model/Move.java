@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "moves")
 @Getter
@@ -18,10 +20,7 @@ public class Move {
     @Column(unique = true)
     private Long playerID;
 
-    private String register1;
-    private String register2;
-    private String register3;
-    private String register4;
-    private String register5;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Long> moves;
 }
 
