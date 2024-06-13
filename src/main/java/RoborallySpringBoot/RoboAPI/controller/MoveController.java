@@ -1,12 +1,11 @@
 package RoborallySpringBoot.RoboAPI.controller;
 
-import RoborallySpringBoot.RoboAPI.model.Game;
 import RoborallySpringBoot.RoboAPI.model.Move;
 import RoborallySpringBoot.RoboAPI.repository.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/moves")
@@ -20,13 +19,13 @@ public class MoveController {
         return moveRepository.save(move);
     }
 
-    @GetMapping("/games/{id}")
-    public Optional<Move> getMovesByGameId(@PathVariable Long id) {
-        return moveRepository.findById(id);
+    @GetMapping("/games/{gameId}")
+    public List<Move> getMovesByGameId(@PathVariable Long gameId) {
+        return moveRepository.findByRegistry_GameID(gameId);
     }
 
     @GetMapping("/player/{playerId}")
-    public Optional<Move> getMovesByPlayerId(@PathVariable Long playerId) {
-        return moveRepository.findById(playerId);
+    public List<Move> getMovesByPlayerId(@PathVariable Long playerId) {
+        return moveRepository.findByRegistry_PlayerID(playerId);
     }
 }
