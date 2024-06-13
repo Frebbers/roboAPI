@@ -42,6 +42,7 @@ public class RoboApiApplication {
 	@Bean
 	public CommandLineRunner demo(){
 		return (args) -> {
+			/*
 			// Create a new game instance
 			Game newGame = new Game();
 			newGame.setMaxPlayers(2);
@@ -66,33 +67,45 @@ public class RoboApiApplication {
 			playerController.updatePlayer(client.getId(), client);
 
 			// Create a move for the Host
-			Move hostMove = new Move();
-			hostMove.setGameId(newGame.getId());
-			hostMove.setPlayerId(host.getId());
+			Move hostMove1 = new Move();
+			hostMove1.setGameId(newGame.getId());
+			hostMove1.setPlayerId(host.getId());
+			hostMove1.setTurnId(1);
 
-			List<String> hostMoves = Arrays.asList("Fwd,", "Fwd", "Turn Right", "Turn Left", "Forward" );
-			hostMove.setMoves(hostMoves);
-			moveController.createMove(hostMove);
+			List<String> hostMoves1 = Arrays.asList("Fwd,", "Fwd", "Turn Right", "Turn Left", "Forward" );
+			hostMove1.setMoves(hostMoves1);
+			moveController.createMove(hostMove1);
 
-			List<String> hostMoves1 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
-			hostMove.setMoves(hostMoves1);
-			moveController.createMove(hostMove);
-			List<String> hostMoves2 = Arrays.asList("Back", "Back", "Back", "Back", "Back" );
-			hostMove.setMoves(hostMoves2);
-			moveController.createMove(hostMove);
-
-			/*
 			// Create a move for the Client
-			Move clientMove = new Move();
-			clientMove.setGameId(newGame.getId());
-			clientMove.setPlayerId(client.getId());
+			Move clientMove1 = new Move();
+			clientMove1.setGameId(newGame.getId());
+			clientMove1.setPlayerId(client.getId());
+			clientMove1.setTurnId(1);
 
-			List<String> clientMoves = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
-			clientMove.setMoves(clientMoves);
-			moveController.createMove(clientMove);
+			List<String> clientMoves1 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
+			clientMove1.setMoves(clientMoves1);
+			moveController.createMove(clientMove1);
 
+			// Create a second move for the Host
+			Move hostMove2 = new Move();
+			hostMove2.setGameId(newGame.getId());
+			hostMove2.setPlayerId(host.getId());
+			hostMove2.setTurnId(2);
+
+			List<String> hostMoves2 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
+			hostMove2.setMoves(hostMoves2);
+			moveController.createMove(hostMove2);
+
+			// Create a second move for the Client
+			Move clientMove2 = new Move();
+			clientMove2.setGameId(newGame.getId());
+			clientMove2.setPlayerId(client.getId());
+			clientMove2.setTurnId(2);
+
+			List<String> clientMoves2 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
+			clientMove2.setMoves(clientMoves2);
+			moveController.createMove(clientMove2);
 			 */
-
 		};
 	}
 }

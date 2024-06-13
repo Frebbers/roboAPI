@@ -1,38 +1,21 @@
 package RoborallySpringBoot.RoboAPI.model;
 
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 @Embeddable
+@Setter
+@Getter
 public class MoveKey implements Serializable {
     private Long gameID;
     private Long playerID;
+    private Integer turnId;
 
     // Default constructor
     public MoveKey() {}
-
-    // Constructor with parameters
-    public MoveKey(Long gameID, Long playerID) {
-        this.gameID = gameID;
-        this.playerID = playerID;
-    }
-
-    // Getters and Setters
-    public Long getGameID() {
-        return gameID;
-    }
-
-    public void setGameID(Long gameID) {
-        this.gameID = gameID;
-    }
-
-    public Long getPlayerID() {
-        return playerID;
-    }
-
-    public void setPlayerID(Long playerID) {
-        this.playerID = playerID;
-    }
 
     // hashCode and equals methods must be overridden for composite key
     @Override
