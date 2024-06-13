@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class MoveKey implements Serializable {
     private Long gameID;
     private Long playerID;
-    private Integer turnId;
+    private Integer turnIndex;
 
     // Default constructor
     public MoveKey() {}

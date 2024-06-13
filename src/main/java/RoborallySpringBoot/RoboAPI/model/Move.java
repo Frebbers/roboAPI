@@ -30,8 +30,8 @@ public class Move {
         registry.setPlayerID(playerId);
     }
 
-    public void setTurnId(Integer turnId){
-        registry.setTurnId(turnId);
+    public void setTurnIndex(Integer turnIndex){
+        registry.setTurnIndex(turnIndex);
     }
 }
 
