@@ -21,6 +21,6 @@ public class Move {
     private Long playerID;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<Long> moves;
+    private List<String> moves;
 }
 
