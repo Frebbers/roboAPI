@@ -20,10 +20,10 @@ public class Move {
     private Long id;
 
     @Column(name = "game_id")
-    private long gameId; // Store only gameId as a primitive long
+    private long gameId;
 
     @Column(name = "player_id")
-    private long playerId; // Store only playerId as a primitive long
+    private long playerId;
 
     private int turn;
 
