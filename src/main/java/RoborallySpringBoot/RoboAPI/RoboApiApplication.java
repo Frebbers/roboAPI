@@ -40,72 +40,50 @@ public class RoboApiApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(){
+	public CommandLineRunner demo() {
 		return (args) -> {
-			/*
 			// Create a new game instance
 			Game newGame = new Game();
 			newGame.setMaxPlayers(2);
-			gameController.createGame(newGame);
+			newGame = gameController.createGame(newGame);
 
-			// Create a new player
+			// Create new players
 			Player host = new Player();
 			host.setName("Host");
+			host = playerController.createPlayer(host);
+
 			Player client = new Player();
-			client.setName("client");
-			playerController.createPlayer(host);
-			playerController.createPlayer(client);
+			client.setName("Client");
+			client = playerController.createPlayer(client);
 
 			// Join the game with the host and client
 			gameController.joinGame(newGame.getId(), host.getId());
 			gameController.joinGame(newGame.getId(), client.getId());
 
-			// Set the ready state for the player
+			// Set the ready state for the players
 			host.setState("READY");
 			client.setState("READY");
 			playerController.updatePlayer(host.getId(), host);
 			playerController.updatePlayer(client.getId(), client);
 
-			// Create a move for the Host
-			Move hostMove1 = new Move();
-			hostMove1.setGameId(newGame.getId());
-			hostMove1.setPlayerId(host.getId());
-			hostMove1.setTurnId(1);
+			// Create moves for the Host
+			createMove(newGame.getId(), host.getId(), 1, Arrays.asList("Fwd", "Fwd", "Turn Right", "Turn Left", "Forward"));
+			createMove(newGame.getId(), host.getId(), 2, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
 
-			List<String> hostMoves1 = Arrays.asList("Fwd,", "Fwd", "Turn Right", "Turn Left", "Forward" );
-			hostMove1.setMoves(hostMoves1);
-			moveController.createMove(hostMove1);
-
-			// Create a move for the Client
-			Move clientMove1 = new Move();
-			clientMove1.setGameId(newGame.getId());
-			clientMove1.setPlayerId(client.getId());
-			clientMove1.setTurnId(1);
-
-			List<String> clientMoves1 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
-			clientMove1.setMoves(clientMoves1);
-			moveController.createMove(clientMove1);
-
-			// Create a second move for the Host
-			Move hostMove2 = new Move();
-			hostMove2.setGameId(newGame.getId());
-			hostMove2.setPlayerId(host.getId());
-			hostMove2.setTurnId(2);
-
-			List<String> hostMoves2 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
-			hostMove2.setMoves(hostMoves2);
-			moveController.createMove(hostMove2);
-
-			// Create a second move for the Client
-			Move clientMove2 = new Move();
-			clientMove2.setGameId(newGame.getId());
-			clientMove2.setPlayerId(client.getId());
-			clientMove2.setTurnId(2);
-
-			List<String> clientMoves2 = Arrays.asList("Fwd,", "Back", "Back", "Turn Right", "Forward" );
-			clientMove2.setMoves(clientMoves2);
-			moveController.createMove(clientMove2);
-			 */
+			// Create moves for the Client
+			createMove(newGame.getId(), client.getId(), 1, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
+			createMove(newGame.getId(), client.getId(), 2, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
 		};
+	}
+
+	private void createMove(Long gameId, Long playerId, int turn, List<String> moveTypes) {
+		Move move = new Move();
+		Game game = gameRepository.findById(gameId).orElseThrow(() -> new RuntimeException("Game not found"));
+		Player player = playerRepository.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found"));
+		move.setGame(game);
+		move.setPlayer(player);
+		move.setTurn(turn);
+		move.setMoveTypes(moveTypes);
+		moveController.createMove(move);
 	}
 }

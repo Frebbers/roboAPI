@@ -1,38 +1,43 @@
 package RoborallySpringBoot.RoboAPI.model;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "moves")
-@Setter
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Move {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private MoveKey registry = new MoveKey();
+    @ManyToOne
+    @JoinColumn(name = "game_id") //name is the field they will join on.
+    @JsonBackReference
+    private Game game;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> moves;
+    //for defining a many-to-one relation to ensure fields maps
+    //to the correct columns in the database
+    @ManyToOne
+    @JoinColumn(name = "player_id")
+    // Bidirectional relationship. Tables got messed up without
+    //and kept nesting the object inside itself. This avoids the occuring recursion.
+    @JsonBackReference
+    private Player player;
 
-    public void setGameId(Long gameId) {
-        registry.setGameID(gameId);
-    }
+    private int turn;
 
-    public void setPlayerId(Long playerId){
-        registry.setPlayerID(playerId);
-    }
-
-    public void setTurnIndex(Integer turnIndex){
-        registry.setTurnIndex(turnIndex);
-    }
+    @ElementCollection
+    @CollectionTable(name = "move_types", joinColumns = @JoinColumn(name = "move_id"))
+    @Column(name = "move_type")
+    private List<String> moveTypes;
 }
-
-
