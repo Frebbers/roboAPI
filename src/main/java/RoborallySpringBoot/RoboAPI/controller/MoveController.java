@@ -39,21 +39,27 @@ public class MoveController {
         return ResponseEntity.ok(moves);
     }
 
-    @GetMapping("/game/{gameId}/turn/{turn}")
-    public ResponseEntity<List<Move>> getMovesByTurn(@PathVariable Long gameId, @PathVariable int turn) {
-        List<Move> moves = moveRepository.findByGameIdAndTurn(gameId, turn);
+    @GetMapping("/game/{gameId}/turn/{turnIndex}")
+    public ResponseEntity<List<Move>> getMovesByTurn(@PathVariable Long gameId, @PathVariable int turnIndex) {
+        List<Move> moves = moveRepository.findByGameIdAndTurnIndex(gameId, turnIndex);
         return ResponseEntity.ok(moves);
     }
 
-    @GetMapping("/player/{playerId}/turn/{turn}")
-    public ResponseEntity<List<Move>> getMovesByPlayerAndTurn(@PathVariable Long playerId, @PathVariable int turn) {
-        List<Move> moves = moveRepository.findByPlayerIdAndTurn(playerId, turn);
+    @GetMapping("/player/{playerId}/turn/{turnIndex}")
+    public ResponseEntity<List<Move>> getMovesByPlayerAndTurn(@PathVariable Long playerId, @PathVariable int turnIndex) {
+        List<Move> moves = moveRepository.findByPlayerIdAndTurnIndex(playerId, turnIndex);
         return ResponseEntity.ok(moves);
     }
 
-    @GetMapping("/game/{gameId}/player/{playerId}/turn/{turn}")
-    public ResponseEntity<List<Move>> getMovesByGamePlayerAndTurn(@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable int turn) {
-        List<Move> moves = moveRepository.findByGameIdAndPlayerIdAndTurn(gameId, playerId, turn);
+    @GetMapping("/game/{gameId}/player/{playerId}/turn/{turnIndex}")
+    public ResponseEntity<List<Move>> getMovesByGamePlayerAndTurn(@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable int turnIndex) {
+        List<Move> moves = moveRepository.findByGameIdAndPlayerIdAndTurnIndex(gameId, playerId, turnIndex);
         return ResponseEntity.ok(moves);
+    }
+
+    @GetMapping("/game/{gameId}/turn/{turnIndex}/player-count")
+    public ResponseEntity<Integer> getReadyPlayerCountByTurn(@PathVariable long gameId, @PathVariable int turnIndex) {
+        Integer count = moveRepository.countReadyPlayersByGameIdAndTurnIndex(gameId, turnIndex);
+        return ResponseEntity.ok(count);
     }
 }

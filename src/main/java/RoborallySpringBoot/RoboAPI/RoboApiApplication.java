@@ -42,6 +42,7 @@ public class RoboApiApplication {
 	@Bean
 	public CommandLineRunner demo() {
 		return (args) -> {
+			/*
 			// Create a new game instance
 			Game newGame = new Game();
 			newGame.setMaxPlayers(2);
@@ -69,10 +70,15 @@ public class RoboApiApplication {
 			// Create moves for the Host
 			createMove(newGame.getId(), host.getId(), 1, Arrays.asList("Fwd", "Fwd", "Turn Right", "Turn Left", "Forward"));
 			createMove(newGame.getId(), host.getId(), 2, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
+			System.out.println("Players ready: " + moveController.getReadyPlayerCountByTurn(newGame.getId(), 1));
 
 			// Create moves for the Client
 			createMove(newGame.getId(), client.getId(), 1, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
 			createMove(newGame.getId(), client.getId(), 2, Arrays.asList("Fwd", "Back", "Back", "Turn Right", "Forward"));
+			System.out.println("Players ready: " + moveController.getReadyPlayerCountByTurn(newGame.getId(), 1));
+
+			 */
+
 		};
 	}
 
@@ -80,7 +86,7 @@ public class RoboApiApplication {
 		Move move = new Move();
 		move.setGameId(gameId);
 		move.setPlayerId(playerId);
-		move.setTurn(turn);
+		move.setTurnIndex(turn);
 		move.setMoveTypes(moveTypes);
 		moveController.createMove(move);
 	}

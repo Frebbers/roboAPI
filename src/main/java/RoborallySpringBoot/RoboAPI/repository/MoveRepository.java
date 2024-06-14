@@ -9,9 +9,10 @@ import java.util.List;
 @Repository
 public interface MoveRepository extends JpaRepository<Move, Long> {
     List<Move> findByGameIdAndPlayerId(long gameId, long playerId);
-    List<Move> findByGameIdAndTurn(long gameId, int turn);
-    List<Move> findByGameIdAndPlayerIdAndTurn(long gameId, long playerId, int turn);
+    List<Move> findByGameIdAndTurnIndex(long gameId, int turnIndex);
+    List<Move> findByGameIdAndPlayerIdAndTurnIndex(long gameId, long playerId, int turnIndex);
     List<Move> findByGameId(long gameId);
     List<Move> findByPlayerId(long playerId);
-    List<Move> findByPlayerIdAndTurn(long playerId, int turn);
+    List<Move> findByPlayerIdAndTurnIndex(long playerId, int turnIndex);
+    Integer countReadyPlayersByGameIdAndTurnIndex(long gameId, int turnIndex);
 }

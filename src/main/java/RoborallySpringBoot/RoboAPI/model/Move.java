@@ -25,7 +25,7 @@ public class Move {
     @Column(name = "player_id")
     private long playerId;
 
-    private int turn;
+    private int turnIndex;
 
     @ElementCollection
     @CollectionTable(name = "move_types", joinColumns = @JoinColumn(name = "move_id"))
