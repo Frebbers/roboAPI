@@ -8,10 +8,10 @@ import java.util.List;
 
 @Repository
 public interface MoveRepository extends JpaRepository<Move, Long> {
-    List<Move> findByGame_IdAndPlayer_Id(Long gameId, Long playerId);
-    List<Move> findByGame_IdAndTurn(Long gameId, int turn);
-    List<Move> findByGame_IdAndPlayer_IdAndTurn(Long gameId, Long playerId, int turn);
-    List<Move> findByGame_Id(Long gameId);
-    List<Move> findByPlayer_Id(Long playerId);
-    List<Move> findByPlayer_IdAndTurn(Long playerId, int turn);
+    List<Move> findByGameIdAndPlayerId(long gameId, long playerId);
+    List<Move> findByGameIdAndTurn(long gameId, int turn);
+    List<Move> findByGameIdAndPlayerIdAndTurn(long gameId, long playerId, int turn);
+    List<Move> findByGameId(long gameId);
+    List<Move> findByPlayerId(long playerId);
+    List<Move> findByPlayerIdAndTurn(long playerId, int turn);
 }

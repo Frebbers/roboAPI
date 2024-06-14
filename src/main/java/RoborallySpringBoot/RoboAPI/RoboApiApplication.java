@@ -78,10 +78,8 @@ public class RoboApiApplication {
 
 	private void createMove(Long gameId, Long playerId, int turn, List<String> moveTypes) {
 		Move move = new Move();
-		Game game = gameRepository.findById(gameId).orElseThrow(() -> new RuntimeException("Game not found"));
-		Player player = playerRepository.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found"));
-		move.setGame(game);
-		move.setPlayer(player);
+		move.setGameId(gameId);
+		move.setPlayerId(playerId);
 		move.setTurn(turn);
 		move.setMoveTypes(moveTypes);
 		moveController.createMove(move);

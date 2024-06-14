@@ -1,6 +1,5 @@
 package RoborallySpringBoot.RoboAPI.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,19 +19,11 @@ public class Move {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "game_id") //name is the field they will join on.
-    @JsonBackReference
-    private Game game;
+    @Column(name = "game_id")
+    private long gameId; // Store only gameId as a primitive long
 
-    //for defining a many-to-one relation to ensure fields maps
-    //to the correct columns in the database
-    @ManyToOne
-    @JoinColumn(name = "player_id")
-    // Bidirectional relationship. Tables got messed up without
-    //and kept nesting the object inside itself. This avoids the occuring recursion.
-    @JsonBackReference
-    private Player player;
+    @Column(name = "player_id")
+    private long playerId; // Store only playerId as a primitive long
 
     private int turn;
 
