@@ -6,6 +6,7 @@ import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -55,6 +56,17 @@ public class GameController {
     public void deleteGame(@PathVariable Long id) {
         gameRepository.deleteById(id);
     }
+
+    @Scheduled(fixedRate = 60000L)
+    void disposeEmptyGames(){
+        List<Game> games = getAllGames();
+        games = games.stream().filter(g -> g.getPlayerIds().isEmpty()).collect(Collectors.toList());
+        for (Game game : games) {
+            deleteGame(game.getId());
+            System.out.println("Deleted game: " + game.getId());
+        }
+    }
+
 
     @GetMapping("/{id}/players")
     public List<Player> getPlayersInLobby(@PathVariable Long id) {
