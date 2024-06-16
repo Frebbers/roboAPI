@@ -1,5 +1,6 @@
 package RoborallySpringBoot.RoboAPI.controller;
 
+import RoborallySpringBoot.RoboAPI.model.Command;
 import RoborallySpringBoot.RoboAPI.model.Move;
 import RoborallySpringBoot.RoboAPI.repository.MoveRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,12 @@ public class MoveController {
 
     @PostMapping
     public ResponseEntity<Move> createMove(@RequestBody Move move) {
-        Move createdMove = moveRepository.save(move);
-        return ResponseEntity.ok(createdMove);
+        if (Command.areValidCommands(move.getMoveTypes())) {
+            Move createdMove = moveRepository.save(move);
+            return ResponseEntity.ok(createdMove);
+        }
+        //TODO check if this breaks the client application
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/game/{gameId}")
@@ -62,4 +67,5 @@ public class MoveController {
         Integer count = moveRepository.countReadyPlayersByGameIdAndTurnIndex(gameId, turnIndex);
         return ResponseEntity.ok(count);
     }
+
 }

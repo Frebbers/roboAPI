@@ -77,4 +77,18 @@ public enum Command {
             default -> throw new IllegalArgumentException("Invalid command");
         };
     }
+        // existing code...
+
+    public static boolean areValidCommands(List<String> input) {
+        for (Command command : Command.values()) {
+            for (String commandInput : input) {
+                if (command.displayName.equalsIgnoreCase(commandInput)) {
+                    //TODO check if this is reachable
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
+
