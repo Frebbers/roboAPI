@@ -3,9 +3,7 @@ package RoborallySpringBoot.RoboAPI;
 import RoborallySpringBoot.RoboAPI.controller.GameController;
 import RoborallySpringBoot.RoboAPI.controller.MoveController;
 import RoborallySpringBoot.RoboAPI.controller.PlayerController;
-import RoborallySpringBoot.RoboAPI.model.Game;
 import RoborallySpringBoot.RoboAPI.model.Move;
-import RoborallySpringBoot.RoboAPI.model.Player;
 import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.MoveRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
@@ -16,7 +14,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import java.util.Arrays;
 import java.util.List;
 @EnableScheduling
 @SpringBootApplication

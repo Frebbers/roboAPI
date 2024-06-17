@@ -19,6 +19,7 @@ public class Game {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private Long boardId;
     private int maxPlayers;
 
