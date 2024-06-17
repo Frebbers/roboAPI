@@ -64,7 +64,7 @@ public enum Command {
 
     public static Command fromString(String input) throws IllegalArgumentException{
         return switch (input) {
-            case "Empty", "" -> Command.EMPTY;
+            case "Empty", "", "empty" -> Command.EMPTY;
             case "Fwd", "Forward", "forward", "fwd" -> Command.FORWARD;
             case "Turn Right", "turn right" -> Command.RIGHT;
             case "Turn Left","turn left" -> Command.LEFT;
@@ -80,15 +80,16 @@ public enum Command {
         // existing code...
 
     public static boolean areValidCommands(List<String> input) {
+        int validcommands = 0;
         for (Command command : Command.values()) {
             for (String commandInput : input) {
-                if (command.displayName.equalsIgnoreCase(commandInput)) {
+                if (command.equals(fromString(commandInput))) {
                     //TODO check if this is reachable
-                    return true;
+                    validcommands++;
                 }
             }
         }
-        return false;
+        return validcommands == input.size();
     }
 }
 
