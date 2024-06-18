@@ -72,7 +72,7 @@ public enum Command {
             case "Move Back", "Back", "Move back", "move back" -> Command.BACK;
             case "U-Turn", "u-turn", "Turn Around", "Turn around"->Command.U_TURN;
             case "Repeat", "Again", "again", "repeat"->Command.AGAIN;
-            case "Left or right", "left or right", "L or R"-> Command.OPTION_LEFT_RIGHT;
+            case "Left or Right", "left or right", "L or R"-> Command.OPTION_LEFT_RIGHT;
 
             default -> throw new IllegalArgumentException("Invalid command");
         };

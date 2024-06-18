@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/moves")
@@ -25,6 +26,28 @@ public class MoveController {
         //TODO check if this breaks the client application
         return ResponseEntity.badRequest().build();
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Move> updateMove(@RequestBody Move updatedMove) {
+        if (updatedMove.getId() == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<Move> existingMoveOptional = moveRepository.findById(updatedMove.getId());
+        if (!existingMoveOptional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Move existingMove = existingMoveOptional.get();
+        existingMove.setGameId(updatedMove.getGameId());
+        existingMove.setPlayerId(updatedMove.getPlayerId());
+        existingMove.setTurnIndex(updatedMove.getTurnIndex());
+        existingMove.setMoveTypes(updatedMove.getMoveTypes());
+
+        moveRepository.save(existingMove);
+        return ResponseEntity.ok(existingMove);
+    }
+
 
     @GetMapping("/game/{gameId}")
     public ResponseEntity<List<Move>> getMovesByGame(@PathVariable long gameId) {
@@ -57,9 +80,9 @@ public class MoveController {
     }
 
     @GetMapping("/game/{gameId}/player/{playerId}/turn/{turnIndex}")
-    public ResponseEntity<List<Move>> getMovesByGamePlayerAndTurn(@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable int turnIndex) {
-        List<Move> moves = moveRepository.findByGameIdAndPlayerIdAndTurnIndex(gameId, playerId, turnIndex);
-        return ResponseEntity.ok(moves);
+    public ResponseEntity<Move> getMoveByGamePlayerAndTurn(@PathVariable Long gameId, @PathVariable Long playerId, @PathVariable int turnIndex) {
+        Move move = moveRepository.findByGameIdAndPlayerIdAndTurnIndex(gameId, playerId, turnIndex);
+        return ResponseEntity.ok(move);
     }
 
     @GetMapping("/game/{gameId}/turn/{turnIndex}/player-count")
@@ -69,3 +92,5 @@ public class MoveController {
     }
 
 }
+
+

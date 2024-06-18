@@ -5,6 +5,7 @@ import RoborallySpringBoot.RoboAPI.model.Player;
 import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,7 @@ public class PlayerController {
     public Player updatePlayer(@PathVariable Long id, @RequestBody Player updatedPlayer) {
         Player player = playerRepository.findById(id).orElse(null);
         if (player != null) {
+            player.setId(updatedPlayer.getId());
             player.setName(updatedPlayer.getName());
             player.setState(updatedPlayer.getState());
             player.setGameId(updatedPlayer.getGameId());
@@ -69,7 +71,6 @@ public class PlayerController {
                     Game game = gameOptional.get();
                     List<Long> playerIds = game.getPlayerIds();
 
-                    // Remove the player's ID from the game's player IDs list
                     if (playerIds.remove(playerId)) {
                         game.setPlayerIds(playerIds);
                         gameRepository.save(game);
