@@ -80,6 +80,7 @@ public class PlayerController {
 
             // Remove the game ID from the player
             player.setGameId(null);
+            player.setState("NOT_IN_LOBBY");
             playerRepository.save(player);
 
             return ResponseEntity.ok("Player has left the game");
