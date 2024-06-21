@@ -46,6 +46,7 @@ public class GameController {
             Game existingGame = gameOptional.get();
             existingGame.setPlayerIds(game.getPlayerIds());
             existingGame.setMaxPlayers(game.getMaxPlayers());
+            existingGame.setGameState(game.getGameState());
             return gameRepository.save(existingGame);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
@@ -66,7 +67,6 @@ public class GameController {
             System.out.println("Deleted game: " + game.getId());
         }
     }
-
 
     @GetMapping("/{id}/players")
     public List<Player> getPlayersInLobby(@PathVariable Long id) {
