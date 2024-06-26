@@ -21,6 +21,8 @@
  */
 package RoborallySpringBoot.RoboAPI.model;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +49,7 @@ public enum Command {
 
     final public String displayName;
 
+    @Getter
     final private List<Command> options;
 
     Command(String displayName, Command... options) {
@@ -56,10 +59,6 @@ public enum Command {
 
     public boolean isInteractive() {
         return !options.isEmpty();
-    }
-
-    public List<Command> getOptions() {
-        return options;
     }
 
     public static Command fromString(String input) throws IllegalArgumentException{
