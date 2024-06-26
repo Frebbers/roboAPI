@@ -79,12 +79,16 @@ public enum Command {
     }
         // existing code...
 
+    /**
+     *
+     * @param input a List of String representing command enums
+     * @return true if all commands are valid, false otherwise
+     */
     public static boolean areValidCommands(List<String> input) {
         int validcommands = 0;
         for (Command command : Command.values()) {
             for (String commandInput : input) {
                 if (command.equals(fromString(commandInput))) {
-                    //TODO check if this is reachable
                     validcommands++;
                 }
             }
