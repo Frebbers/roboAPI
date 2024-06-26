@@ -4,9 +4,13 @@ import RoborallySpringBoot.RoboAPI.model.Game;
 import RoborallySpringBoot.RoboAPI.model.Player;
 import RoborallySpringBoot.RoboAPI.repository.GameRepository;
 import RoborallySpringBoot.RoboAPI.repository.PlayerRepository;
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 @RequestMapping("api/games")
 public class GameController {
@@ -35,8 +40,9 @@ public class GameController {
     }
 
     @PostMapping
-    public Game createGame(@RequestBody Game game) {
-        return gameRepository.save(game);
+    public ResponseEntity<Game> createGame(@Valid @RequestBody Game game) {
+        Game savedGame = gameRepository.save(game);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedGame);
     }
 
     @PutMapping("/{gameId}")
